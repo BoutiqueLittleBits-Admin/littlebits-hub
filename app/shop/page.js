@@ -1,8 +1,17 @@
 "use client";
+import { useState } from 'react';
 import { useCart } from '../components/CartContext';
+import Toast from '../components/Toast';
 
 export default function ShopPage() {
   const { addToCart } = useCart();
+  const [showToast, setShowToast] = useState(false);
+
+  const handleAddToCart = (item) => {
+    addToCart(item);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
 
   const products = [
     { slug: "rainbow-heart-sticker-pack", emoji: "🌈", name: "Rainbow Heart Sticker Pack", price: "12.99", color: "from-brand-blush to-brand-gold", category: "Stickers" },
@@ -21,6 +30,8 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen">
+      <Toast message="Added to cart!" isVisible={showToast} />
+      
       <section className="max-w-6xl mx-auto py-16 px-6">
         <h1 className="text-5xl font-bold text-brand-sage mb-4 text-center">
           Shop All
@@ -46,7 +57,7 @@ export default function ShopPage() {
                 </a>
                 <p className="text-lg font-bold text-brand-coral mb-3">${item.price}</p>
                 <button 
-                  onClick={() => addToCart(item)}
+                  onClick={() => handleAddToCart(item)}
                   className="w-full bg-brand-sage text-white py-2 rounded-lg font-semibold hover:bg-brand-coral transition-colors text-sm"
                 >
                   Add to Cart
