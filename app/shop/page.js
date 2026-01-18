@@ -7,6 +7,7 @@ export default function ShopPage() {
   const { addToCart } = useCart();
   const [showToast, setShowToast] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleAddToCart = (item) => {
     addToCart(item);
@@ -31,9 +32,9 @@ export default function ShopPage() {
 
   const categories = ['All', ...new Set(products.map(p => p.category))];
   
-  const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+  const filteredProducts = products
+    .filter(p => activeCategory === 'All' || p.category === activeCategory)
+    .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="min-h-screen">
@@ -46,6 +47,16 @@ export default function ShopPage() {
         <p className="text-xl text-brand-mint mb-8 text-center">
           Curated finds to spark joy ✨
         </p>
+
+        <div className="max-w-md mx-auto mb-8">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-5 py-3 rounded-full border border-gray-200 focus:border-brand-sage focus:ring-2 focus:ring-brand-mint/50 outline-none transition-all"
+          />
+        </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((category) => (
@@ -63,32 +74,39 @@ export default function ShopPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((item, i) => (
-            <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
-              <a href={`/shop/${item.slug}`}>
-                <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center text-6xl group-hover:scale-105 transition-transform`}>
-                  {item.emoji}
-                </div>
-              </a>
-              <div className="p-4">
-                <span className="text-xs font-medium text-brand-sage bg-brand-mint/20 px-2 py-1 rounded-full">
-                  {item.category}
-                </span>
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="text-5xl mb-4">🔍</div>
+            <p className="text-gray-500">No products found. Try a different search!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredProducts.map((item, i) => (
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
                 <a href={`/shop/${item.slug}`}>
-                  <h3 className="text-md font-semibold text-brand-sage mt-2 mb-1 hover:text-brand-coral transition-colors">{item.name}</h3>
+                  <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center text-6xl group-hover:scale-105 transition-transform`}>
+                    {item.emoji}
+                  </div>
                 </a>
-                <p className="text-lg font-bold text-brand-coral mb-3">${item.price}</p>
-                <button 
-                  onClick={() => handleAddToCart(item)}
-                  className="w-full bg-brand-sage text-white py-2 rounded-lg font-semibold hover:bg-brand-coral transition-colors text-sm"
-                >
-                  Add to Cart
-                </button>
+                <div className="p-4">
+                  <span className="text-xs font-medium text-brand-sage bg-brand-mint/20 px-2 py-1 rounded-full">
+                    {item.category}
+                  </span>
+                  <a href={`/shop/${item.slug}`}>
+                    <h3 className="text-md font-semibold text-brand-sage mt-2 mb-1 hover:text-brand-coral transition-colors">{item.name}</h3>
+                  </a>
+                  <p className="text-lg font-bold text-brand-coral mb-3">${item.price}</p>
+                  <button 
+                    onClick={() => handleAddToCart(item)}
+                    className="w-full bg-brand-sage text-white py-2 rounded-lg font-semibold hover:bg-brand-coral transition-colors text-sm"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
