@@ -9,7 +9,7 @@ export default function CartDropdown({ isOpen, onClose }) {
   return (
     <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 z-50">
       <div className="p-4 border-b border-gray-100">
-        <h3 className="font-bold text-emerald-700">Your Cart</h3>
+        <h3 className="font-bold text-brand-sage">Your Cart</h3>
       </div>
       
       {cartItems.length === 0 ? (
@@ -25,29 +25,29 @@ export default function CartDropdown({ isOpen, onClose }) {
                   <span className="text-2xl">{item.emoji}</span>
                   <div>
                     <p className="text-sm font-medium text-gray-700">{item.name}</p>
-                    <p className="text-sm text-rose-500">${item.price}</p>
+                    <p className="text-sm text-brand-coral">${item.price}</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => removeFromCart(i)}
-                  className="text-gray-400 hover:text-rose-500 transition-colors"
+                  className="text-gray-400 hover:text-brand-coral transition-colors"
                 >
                   ✕
                 </button>
               </div>
             ))}
           </div>
-          <div className="p-4 bg-gray-50">
+          <div className="p-4 bg-gray-50 rounded-b-xl">
             <div className="flex justify-between mb-4">
               <span className="font-semibold text-gray-700">Total:</span>
-              <span className="font-bold text-emerald-700">${cartTotal}</span>
+              <span className="font-bold text-brand-sage">${cartTotal}</span>
             </div>
-            <button className="w-full bg-rose-500 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition-colors mb-2">
+            <button className="w-full bg-brand-coral text-white py-2 rounded-lg font-semibold hover:bg-brand-sage transition-colors mb-2">
               Checkout
             </button>
             <button 
               onClick={clearCart}
-              className="w-full text-gray-500 py-1 text-sm hover:text-rose-500 transition-colors"
+              className="w-full text-gray-500 py-1 text-sm hover:text-brand-coral transition-colors"
             >
               Clear Cart
             </button>
