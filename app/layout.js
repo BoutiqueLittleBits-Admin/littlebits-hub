@@ -1,6 +1,7 @@
 import './globals.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Banner from './components/Banner'
 import { CartProvider } from './components/CartContext'
 
 export const metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <CartProvider>
+          <Banner />
           <Header />
           {children}
           <Footer />
