@@ -29,4 +29,89 @@ export default function ProductPage() {
   const handleAddToCart = (item) => {
     addToCart(item);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000)
+    setTimeout(() => setShowToast(false), 2000);
+  };
+  
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-brand-sage mb-4">Product Not Found</h1>
+          <a href="/shop" className="text-brand-coral hover:underline">← Back to Shop</a>
+        </div>
+      </div>
+    );
+  }
+
+  const relatedProducts = allProducts
+    .filter(p => p.category === product.category && p.slug !== product.slug)
+    .slice(0, 4);
+
+  return (
+    <div className="min-h-screen">
+      <Toast message="Added to cart!" isVisible={showToast} />
+      
+      <section className="max-w-6xl mx-auto py-16 px-6">
+        <a href="/shop" className="text-brand-sage hover:text-brand-coral transition-colors mb-8 inline-block">
+          ← Back to Shop
+        </a>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+          <div className={`h-96 bg-gradient-to-br ${product.color} rounded-2xl flex items-center justify-center text-9xl shadow-lg`}>
+            {product.emoji}
+          </div>
+          
+          <div>
+            <span className="text-sm font-medium text-brand-sage bg-brand-mint/20 px-3 py-1 rounded-full">
+              {product.category}
+            </span>
+            <h1 className="text-4xl font-bold text-brand-sage mt-4 mb-4">
+              {product.name}
+            </h1>
+            <p className="text-3xl font-bold text-brand-coral mb-6">
+              ${product.price}
+            </p>
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              {product.description}
+            </p>
+            <button 
+              onClick={() => handleAddToCart(product)}
+              className="w-full md:w-auto bg-brand-sage text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-coral transition-all shadow-lg"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        {relatedProducts.length > 0 && (
+          <div className="mt-20">
+            <h2 className="text-2xl font-bold text-brand-sage mb-8">You Might Also Like</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((item, i) => (
+                <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
+                  <a href={`/shop/${item.slug}`}>
+                    <div className={`h-40 bg-gradient-to-br ${item.color} flex items-center justify-center text-5xl group-hover:scale-105 transition-transform`}>
+                      {item.emoji}
+                    </div>
+                  </a>
+                  <div className="p-4">
+                    <a href={`/shop/${item.slug}`}>
+                      <h3 className="text-sm font-semibold text-brand-sage mb-1 hover:text-brand-coral transition-colors">{item.name}</h3>
+                    </a>
+                    <p className="text-md font-bold text-brand-coral mb-3">${item.price}</p>
+                    <button 
+                      onClick={() => handleAddToCart(item)}
+                      className="w-full bg-brand-sage text-white py-2 rounded-lg font-semibold hover:bg-brand-coral transition-colors text-xs"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
