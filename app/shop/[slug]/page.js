@@ -26,59 +26,7 @@ export default function ProductPage() {
   
   const product = allProducts.find(p => p.slug === slug);
 
-  const handleAddToCart = () => {
-    addToCart(product);
+  const handleAddToCart = (item) => {
+    addToCart(item);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
-  };
-  
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-brand-sage mb-4">Product Not Found</h1>
-          <a href="/shop" className="text-brand-coral hover:underline">← Back to Shop</a>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen">
-      <Toast message="Added to cart!" isVisible={showToast} />
-      
-      <section className="max-w-6xl mx-auto py-16 px-6">
-        <a href="/shop" className="text-brand-sage hover:text-brand-coral transition-colors mb-8 inline-block">
-          ← Back to Shop
-        </a>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
-          <div className={`h-96 bg-gradient-to-br ${product.color} rounded-2xl flex items-center justify-center text-9xl shadow-lg`}>
-            {product.emoji}
-          </div>
-          
-          <div>
-            <span className="text-sm font-medium text-brand-sage bg-brand-mint/20 px-3 py-1 rounded-full">
-              {product.category}
-            </span>
-            <h1 className="text-4xl font-bold text-brand-sage mt-4 mb-4">
-              {product.name}
-            </h1>
-            <p className="text-3xl font-bold text-brand-coral mb-6">
-              ${product.price}
-            </p>
-            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              {product.description}
-            </p>
-            <button 
-              onClick={handleAddToCart}
-              className="w-full md:w-auto bg-brand-sage text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-coral transition-all shadow-lg"
-            >
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
+    setTimeout(() => setShowToast(false), 2000)
