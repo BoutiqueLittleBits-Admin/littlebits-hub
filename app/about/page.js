@@ -2,7 +2,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen">
       <section className="max-w-4xl mx-auto py-20 px-6">
-        <h1 className="text-5xl font-bold text-emerald-700 mb-8 text-center">
+        <h1 className="text-5xl font-bold text-brand-sage mb-8 text-center">
           Our Story
         </h1>
         
@@ -23,17 +23,17 @@ export default function AboutPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="bg-gradient-to-br from-pink-300 to-yellow-300 rounded-2xl p-8">
+          <div className="bg-gradient-to-br from-brand-blush to-brand-gold rounded-2xl p-8">
             <div className="text-5xl mb-4">🌈</div>
             <h3 className="text-xl font-bold text-white mb-2">Curated with Care</h3>
             <p className="text-white/90">Every item handpicked for maximum joy</p>
           </div>
-          <div className="bg-gradient-to-br from-blue-400 to-green-300 rounded-2xl p-8">
+          <div className="bg-gradient-to-br from-brand-slate to-brand-mint rounded-2xl p-8">
             <div className="text-5xl mb-4">💝</div>
             <h3 className="text-xl font-bold text-white mb-2">Gift-Ready</h3>
             <p className="text-white/90">Beautiful packaging included</p>
           </div>
-          <div className="bg-gradient-to-br from-red-400 to-pink-300 rounded-2xl p-8">
+          <div className="bg-gradient-to-br from-brand-coral to-brand-blush rounded-2xl p-8">
             <div className="text-5xl mb-4">✨</div>
             <h3 className="text-xl font-bold text-white mb-2">Sparking Joy</h3>
             <p className="text-white/90">Since 2025</p>
