@@ -5,9 +5,9 @@ export default function HomePage() {
   const { addToCart } = useCart();
 
   const featuredItems = [
-    { emoji: "🌈", name: "Rainbow Heart Sticker Pack", price: "12.99", color: "from-brand-blush to-brand-gold" },
-    { emoji: "🎁", name: "Surprise Gift Box", price: "24.99", color: "from-brand-slate to-brand-mint" },
-    { emoji: "💝", name: "Nostalgic Charm Set", price: "18.50", color: "from-brand-coral to-brand-blush" }
+    { slug: "rainbow-heart-sticker-pack", emoji: "🌈", name: "Rainbow Heart Sticker Pack", price: "12.99", color: "from-brand-blush to-brand-gold" },
+    { slug: "surprise-gift-box", emoji: "🎁", name: "Surprise Gift Box", price: "24.99", color: "from-brand-slate to-brand-mint" },
+    { slug: "nostalgic-charm-set", emoji: "💝", name: "Nostalgic Charm Set", price: "18.50", color: "from-brand-coral to-brand-blush" }
   ];
 
   return (
@@ -30,12 +30,16 @@ export default function HomePage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {featuredItems.map((item, i) => (
-            <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200">
-              <div className={`h-64 bg-gradient-to-br ${item.color} flex items-center justify-center text-7xl`}>
-                {item.emoji}
-              </div>
+            <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
+              <a href={`/shop/${item.slug}`}>
+                <div className={`h-64 bg-gradient-to-br ${item.color} flex items-center justify-center text-7xl group-hover:scale-105 transition-transform`}>
+                  {item.emoji}
+                </div>
+              </a>
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-brand-sage mb-2">{item.name}</h3>
+                <a href={`/shop/${item.slug}`}>
+                  <h3 className="text-lg font-semibold text-brand-sage mb-2 hover:text-brand-coral transition-colors">{item.name}</h3>
+                </a>
                 <p className="text-xl font-bold text-brand-coral mb-4">${item.price}</p>
                 <button 
                   onClick={() => addToCart(item)}
