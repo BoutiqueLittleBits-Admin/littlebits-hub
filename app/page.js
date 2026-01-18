@@ -19,9 +19,9 @@ export default function HomePage() {
         <p className="text-xl text-emerald-600 mb-8">
           Curated, colorful surprises and seeds of nostalgia for the fun aunties, thoughtful gifters, and everyone in between.
         </p>
-        <button className="bg-rose-500 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition-all shadow-lg">
+        <a href="/shop" className="inline-block bg-rose-500 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition-all shadow-lg">
           Shop the Collection
-        </button>
+        </a>
       </section>
 
       <section className="max-w-6xl mx-auto px-6 py-12">
