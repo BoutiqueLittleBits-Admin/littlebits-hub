@@ -8,6 +8,7 @@ export default function ShopPage() {
   const [showToast, setShowToast] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('default');
 
   const handleAddToCart = (item) => {
     addToCart(item);
@@ -32,9 +33,17 @@ export default function ShopPage() {
 
   const categories = ['All', ...new Set(products.map(p => p.category))];
   
-  const filteredProducts = products
+  let filteredProducts = products
     .filter(p => activeCategory === 'All' || p.category === activeCategory)
     .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  if (sortBy === 'price-low') {
+    filteredProducts = [...filteredProducts].sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  } else if (sortBy === 'price-high') {
+    filteredProducts = [...filteredProducts].sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  } else if (sortBy === 'name') {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   return (
     <div className="min-h-screen">
@@ -58,7 +67,7 @@ export default function ShopPage() {
           />
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-6">
           {categories.map((category) => (
             <button
               key={category}
@@ -72,6 +81,19 @@ export default function ShopPage() {
               {category}
             </button>
           ))}
+        </div>
+
+        <div className="flex justify-center mb-12">
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="px-4 py-2 rounded-lg border border-gray-200 text-brand-sage focus:border-brand-sage focus:ring-2 focus:ring-brand-mint/50 outline-none transition-all"
+          >
+            <option value="default">Sort by: Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+          </select>
         </div>
 
         {filteredProducts.length === 0 ? (
