@@ -1,6 +1,8 @@
 "use client";
+import { useState } from 'react';
 import { useCart } from '../../components/CartContext';
 import { useParams } from 'next/navigation';
+import Toast from '../../components/Toast';
 
 const allProducts = [
   { slug: "rainbow-heart-sticker-pack", emoji: "🌈", name: "Rainbow Heart Sticker Pack", price: "12.99", color: "from-brand-blush to-brand-gold", category: "Stickers", description: "A delightful collection of 24 rainbow heart stickers perfect for decorating journals, laptops, water bottles, and more. Each sticker is waterproof and made with premium vinyl." },
@@ -20,8 +22,15 @@ const allProducts = [
 export default function ProductPage() {
   const { slug } = useParams();
   const { addToCart } = useCart();
+  const [showToast, setShowToast] = useState(false);
   
   const product = allProducts.find(p => p.slug === slug);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
   
   if (!product) {
     return (
@@ -36,6 +45,8 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen">
+      <Toast message="Added to cart!" isVisible={showToast} />
+      
       <section className="max-w-6xl mx-auto py-16 px-6">
         <a href="/shop" className="text-brand-sage hover:text-brand-coral transition-colors mb-8 inline-block">
           ← Back to Shop
@@ -60,7 +71,7 @@ export default function ProductPage() {
               {product.description}
             </p>
             <button 
-              onClick={() => addToCart(product)}
+              onClick={handleAddToCart}
               className="w-full md:w-auto bg-brand-sage text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-coral transition-all shadow-lg"
             >
               Add to Cart
