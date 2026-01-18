@@ -1,8 +1,11 @@
 "use client";
+import { useState } from 'react';
 import { useCart } from './CartContext';
+import CartDropdown from './CartDropdown';
 
 export default function Header() {
   const { cartCount } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -11,13 +14,19 @@ export default function Header() {
           ✨ Boutique Little Bits
         </div>
         <nav className="hidden md:flex gap-6 text-emerald-600 font-medium">
-          <a href="#" className="hover:text-rose-500 transition-colors">Shop</a>
-          <a href="#" className="hover:text-rose-500 transition-colors">About</a>
-          <a href="#" className="hover:text-rose-500 transition-colors">Contact</a>
+          <a href="/" className="hover:text-rose-500 transition-colors">Home</a>
+          <a href="/about" className="hover:text-rose-500 transition-colors">About</a>
+          <a href="/contact" className="hover:text-rose-500 transition-colors">Contact</a>
         </nav>
-        <button className="bg-emerald-700 text-white px-4 py-2 rounded-full font-semibold hover:bg-rose-500 transition-colors">
-          🛒 Cart ({cartCount})
-        </button>
+        <div className="relative">
+          <button 
+            onClick={() => setCartOpen(!cartOpen)}
+            className="bg-emerald-700 text-white px-4 py-2 rounded-full font-semibold hover:bg-rose-500 transition-colors"
+          >
+            🛒 Cart ({cartCount})
+          </button>
+          <CartDropdown isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+        </div>
       </div>
     </header>
   );
