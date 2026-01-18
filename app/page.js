@@ -1,4 +1,9 @@
+"use client";
+import { useCart } from './components/CartContext';
+
 export default function HomePage() {
+  const { addToCart } = useCart();
+
   const featuredItems = [
     { emoji: "🌈", name: "Rainbow Heart Sticker Pack", price: "12.99", color: "from-pink-300 to-yellow-300" },
     { emoji: "🎁", name: "Surprise Gift Box", price: "24.99", color: "from-blue-400 to-green-300" },
@@ -32,7 +37,10 @@ export default function HomePage() {
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-emerald-700 mb-2">{item.name}</h3>
                 <p className="text-xl font-bold text-rose-500 mb-4">${item.price}</p>
-                <button className="w-full bg-emerald-700 text-white py-2 rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+                <button 
+                  onClick={() => addToCart(item)}
+                  className="w-full bg-emerald-700 text-white py-2 rounded-lg font-semibold hover:bg-rose-500 transition-colors"
+                >
                   Add to Cart
                 </button>
               </div>
