@@ -12,9 +12,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <div className="flex flex-col gap-2 text-emerald-100">
-              <a href="#" className="hover:text-white transition-colors">Shop All</a>
-              <a href="#" className="hover:text-white transition-colors">About Us</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+              <a href="/shop" className="hover:text-white transition-colors">Shop All</a>
+              <a href="/about" className="hover:text-white transition-colors">About Us</a>
+              <a href="/contact" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
           <div>
