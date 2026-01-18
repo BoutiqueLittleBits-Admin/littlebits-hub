@@ -3,18 +3,22 @@ import { useState } from 'react';
 import { useCart } from './CartContext';
 
 export default function CartDropdown({ isOpen, onClose }) {
-  const { cartItems, removeFromCart, clearCart, cartTotal } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = async () => {
     setLoading(true);
     try {
+      const itemsForCheckout = cartItems.flatMap(item => 
+        Array(item.quantity).fill({ ...item, quantity: 1 })
+      );
+      
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ items: cartItems }),
+        body: JSON.stringify({ items: itemsForCheckout }),
       });
       
       const { url, error } = await response.json();
@@ -25,7 +29,6 @@ export default function CartDropdown({ isOpen, onClose }) {
         return;
       }
       
-      // Redirect to Stripe Checkout
       window.location.href = url;
     } catch (error) {
       alert('Something went wrong. Please try again.');
@@ -49,20 +52,42 @@ export default function CartDropdown({ isOpen, onClose }) {
         <>
           <div className="max-h-64 overflow-y-auto">
             {cartItems.map((item, i) => (
-              <div key={i} className="p-4 border-b border-gray-50 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{item.emoji}</span>
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">{item.name}</p>
-                    <p className="text-sm text-brand-coral">${item.price}</p>
+              <div key={i} className="p-4 border-b border-gray-50">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">{item.emoji}</span>
+                    <div>
+                      <p className="text-sm font-medium text-gray-700">{item.name}</p>
+                      <p className="text-sm text-brand-coral">${item.price} each</p>
+                    </div>
                   </div>
+                  <button 
+                    onClick={() => removeFromCart(i)}
+                    className="text-gray-400 hover:text-brand-coral transition-colors"
+                  >
+                    ✕
+                  </button>
                 </div>
-                <button 
-                  onClick={() => removeFromCart(i)}
-                  className="text-gray-400 hover:text-brand-coral transition-colors"
-                >
-                  ✕
-                </button>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => updateQuantity(i, item.quantity - 1)}
+                      className="w-8 h-8 rounded-full bg-gray-100 hover:bg-brand-mint/30 text-gray-600 font-bold transition-colors"
+                    >
+                      -
+                    </button>
+                    <span className="w-8 text-center font-medium">{item.quantity}</span>
+                    <button 
+                      onClick={() => updateQuantity(i, item.quantity + 1)}
+                      className="w-8 h-8 rounded-full bg-gray-100 hover:bg-brand-mint/30 text-gray-600 font-bold transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p className="font-semibold text-brand-sage">
+                    ${(parseFloat(item.price) * item.quantity).toFixed(2)}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
