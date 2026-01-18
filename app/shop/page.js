@@ -6,6 +6,7 @@ import Toast from '../components/Toast';
 export default function ShopPage() {
   const { addToCart } = useCart();
   const [showToast, setShowToast] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const handleAddToCart = (item) => {
     addToCart(item);
@@ -28,6 +29,12 @@ export default function ShopPage() {
     { slug: "watercolor-palette-pins", emoji: "🎨", name: "Watercolor Palette Pins", price: "13.50", color: "from-brand-mint to-brand-sage", category: "Accessories" },
   ];
 
+  const categories = ['All', ...new Set(products.map(p => p.category))];
+  
+  const filteredProducts = activeCategory === 'All' 
+    ? products 
+    : products.filter(p => p.category === activeCategory);
+
   return (
     <div className="min-h-screen">
       <Toast message="Added to cart!" isVisible={showToast} />
@@ -36,12 +43,28 @@ export default function ShopPage() {
         <h1 className="text-5xl font-bold text-brand-sage mb-4 text-center">
           Shop All
         </h1>
-        <p className="text-xl text-brand-mint mb-12 text-center">
+        <p className="text-xl text-brand-mint mb-8 text-center">
           Curated finds to spark joy ✨
         </p>
 
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`px-4 py-2 rounded-full font-medium transition-all ${
+                activeCategory === category
+                  ? 'bg-brand-sage text-white'
+                  : 'bg-white text-brand-sage border border-brand-sage hover:bg-brand-mint/20'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((item, i) => (
+          {filteredProducts.map((item, i) => (
             <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
               <a href={`/shop/${item.slug}`}>
                 <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center text-6xl group-hover:scale-105 transition-transform`}>
