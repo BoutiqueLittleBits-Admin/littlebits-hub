@@ -1,8 +1,37 @@
 "use client";
+import { useState } from 'react';
 import { useCart } from './CartContext';
 
 export default function CartDropdown({ isOpen, onClose }) {
   const { cartItems, removeFromCart, clearCart, cartTotal } = useCart();
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ items: cartItems }),
+      });
+      
+      const { url, error } = await response.json();
+      
+      if (error) {
+        alert('Checkout error: ' + error);
+        setLoading(false);
+        return;
+      }
+      
+      // Redirect to Stripe Checkout
+      window.location.href = url;
+    } catch (error) {
+      alert('Something went wrong. Please try again.');
+      setLoading(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -42,8 +71,12 @@ export default function CartDropdown({ isOpen, onClose }) {
               <span className="font-semibold text-gray-700">Total:</span>
               <span className="font-bold text-brand-sage">${cartTotal}</span>
             </div>
-            <button className="w-full bg-brand-coral text-white py-2 rounded-lg font-semibold hover:bg-brand-sage transition-colors mb-2">
-              Checkout
+            <button 
+              onClick={handleCheckout}
+              disabled={loading}
+              className="w-full bg-brand-coral text-white py-2 rounded-lg font-semibold hover:bg-brand-sage transition-colors mb-2 disabled:opacity-50"
+            >
+              {loading ? 'Loading...' : 'Checkout'}
             </button>
             <button 
               onClick={clearCart}
