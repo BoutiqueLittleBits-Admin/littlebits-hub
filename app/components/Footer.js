@@ -1,4 +1,11 @@
 export default function Footer() {
+  // UPDATE THESE LINKS WHEN READY:
+  const socialLinks = {
+    instagram: '#', // Replace with: https://instagram.com/yourusername
+    email: '#',     // Replace with: https://mailchi.mp/yourlink (or newsletter signup)
+    tiktok: '#',    // Replace with: https://tiktok.com/@yourusername
+  };
+
   return (
     <footer className="bg-brand-sage text-white mt-20">
       <div className="max-w-6xl mx-auto px-6 py-12">
@@ -21,9 +28,9 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Stay Connected</h4>
             <p className="text-brand-mint mb-4">Follow us for updates and joy!</p>
             <div className="flex gap-4 text-2xl">
-              <a href="#" className="hover:text-brand-blush transition-colors">📸</a>
-              <a href="#" className="hover:text-brand-blush transition-colors">💌</a>
-              <a href="#" className="hover:text-brand-blush transition-colors">🎵</a>
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-brand-blush transition-colors">📸</a>
+              <a href={socialLinks.email} target="_blank" rel="noopener noreferrer" className="hover:text-brand-blush transition-colors">💌</a>
+              <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="hover:text-brand-blush transition-colors">🎵</a>
             </div>
           </div>
         </div>
