@@ -1,117 +1,71 @@
 "use client";
-import { useState } from 'react';
 import { useCart } from './CartContext';
 
-export default function CartDropdown({ isOpen, onClose }) {
-  const { cartItems, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
-  const [loading, setLoading] = useState(false);
+export default function CartDropdown() {
+  const { cart = [], removeFromCart, cartCount, cartTotal, isLoaded } = useCart();
 
-  const handleCheckout = async () => {
-    setLoading(true);
-    try {
-      const itemsForCheckout = cartItems.flatMap(item => 
-        Array(item.quantity).fill({ ...item, quantity: 1 })
-      );
-      
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ items: itemsForCheckout }),
-      });
-      
-      const { url, error } = await response.json();
-      
-      if (error) {
-        alert('Checkout error: ' + error);
-        setLoading(false);
-        return;
-      }
-      
-      window.location.href = url;
-    } catch (error) {
-      alert('Something went wrong. Please try again.');
-      setLoading(false);
-    }
-  };
+  if (!isLoaded) {
+    return (
+      <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 p-4 z-50">
+        <p className="text-center text-gray-500">Loading...</p>
+      </div>
+    );
+  }
 
-  if (!isOpen) return null;
+  if (!cart || cart.length === 0) {
+    return (
+      <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 p-6 z-50">
+        <p className="text-center text-gray-500">Your cart is empty</p>
+        <a 
+          href="/shop" 
+          className="block mt-4 text-center bg-brand-sage text-white py-2 rounded-lg font-semibold hover:bg-brand-coral transition-colors"
+        >
+          Start Shopping
+        </a>
+      </div>
+    );
+  }
 
   return (
-    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 z-50">
-      <div className="p-4 border-b border-gray-100">
-        <h3 className="font-bold text-brand-sage">Your Cart</h3>
-      </div>
+    <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 p-4 z-50">
+      <h3 className="font-bold text-brand-sage mb-4">Your Cart ({cartCount})</h3>
       
-      {cartItems.length === 0 ? (
-        <div className="p-6 text-center text-gray-500">
-          Your cart is empty
-        </div>
-      ) : (
-        <>
-          <div className="max-h-64 overflow-y-auto">
-            {cartItems.map((item, i) => (
-              <div key={i} className="p-4 border-b border-gray-50">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{item.emoji}</span>
-                    <div>
-                      <p className="text-sm font-medium text-gray-700">{item.name}</p>
-                      <p className="text-sm text-brand-coral">${item.price} each</p>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => removeFromCart(i)}
-                    className="text-gray-400 hover:text-brand-coral transition-colors"
-                  >
-                    ✕
-                  </button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <button 
-                      onClick={() => updateQuantity(i, item.quantity - 1)}
-                      className="w-8 h-8 rounded-full bg-gray-100 hover:bg-brand-mint/30 text-gray-600 font-bold transition-colors"
-                    >
-                      -
-                    </button>
-                    <span className="w-8 text-center font-medium">{item.quantity}</span>
-                    <button 
-                      onClick={() => updateQuantity(i, item.quantity + 1)}
-                      className="w-8 h-8 rounded-full bg-gray-100 hover:bg-brand-mint/30 text-gray-600 font-bold transition-colors"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <p className="font-semibold text-brand-sage">
-                    ${(parseFloat(item.price) * item.quantity).toFixed(2)}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="p-4 bg-gray-50 rounded-b-xl">
-            <div className="flex justify-between mb-4">
-              <span className="font-semibold text-gray-700">Total:</span>
-              <span className="font-bold text-brand-sage">${cartTotal}</span>
+      <div className="max-h-64 overflow-y-auto space-y-3">
+        {cart.map((item, index) => (
+          <div key={index} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
+            <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+              <img 
+                src={item.image} 
+                alt={item.name}
+                className="w-full h-full object-contain p-1"
+              />
+            </div>
+            <div className="flex-grow min-w-0">
+              <h4 className="text-sm font-medium text-brand-sage truncate">{item.name}</h4>
+              <p className="text-sm text-brand-coral font-bold">${item.price} x {item.quantity || 1}</p>
             </div>
             <button 
-              onClick={handleCheckout}
-              disabled={loading}
-              className="w-full bg-brand-coral text-white py-2 rounded-lg font-semibold hover:bg-brand-sage transition-colors mb-2 disabled:opacity-50"
+              onClick={() => removeFromCart(item.slug)}
+              className="text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
             >
-              {loading ? 'Loading...' : 'Checkout'}
-            </button>
-            <button 
-              onClick={clearCart}
-              className="w-full text-gray-500 py-1 text-sm hover:text-brand-coral transition-colors"
-            >
-              Clear Cart
+              ✕
             </button>
           </div>
-        </>
-      )}
+        ))}
+      </div>
+      
+      <div className="border-t border-gray-100 mt-4 pt-4">
+        <div className="flex justify-between mb-4">
+          <span className="font-semibold text-brand-sage">Total:</span>
+          <span className="font-bold text-brand-coral">${cartTotal.toFixed(2)}</span>
+        </div>
+        <a 
+          href="/cart" 
+          className="block w-full bg-brand-coral text-white py-3 rounded-lg font-semibold text-center hover:bg-brand-sage transition-colors"
+        >
+          View Cart & Checkout
+        </a>
+      </div>
     </div>
   );
 }
