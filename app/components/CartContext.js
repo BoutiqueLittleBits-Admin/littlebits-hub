@@ -1,4 +1,3 @@
-// app/components/CartContext.js
 "use client";
 import { createContext, useContext, useState, useEffect } from 'react';
 
@@ -10,9 +9,16 @@ export function CartProvider({ children }) {
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
+    try {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          setCart(parsed);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load cart:', e);
     }
     setIsLoaded(true);
   }, []);
@@ -60,12 +66,12 @@ export function CartProvider({ children }) {
     setCart([]);
   };
 
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const cartTotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+  const cartCount = Array.isArray(cart) ? cart.reduce((sum, item) => sum + (item.quantity || 1), 0) : 0;
+  const cartTotal = Array.isArray(cart) ? cart.reduce((sum, item) => sum + (parseFloat(item.price) * (item.quantity || 1)), 0) : 0;
 
   return (
     <CartContext.Provider value={{ 
-      cart, 
+      cart: cart || [], 
       addToCart, 
       removeFromCart, 
       updateQuantity,
