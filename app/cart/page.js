@@ -5,7 +5,6 @@ import { useCart } from '../components/CartContext';
 export default function CartPage() {
   const { cart = [], removeFromCart, updateQuantity, clearCart, isLoaded } = useCart();
   const [zipCode, setZipCode] = useState('');
-  const [packageType, setPackageType] = useState('small-envelope');
   const [shippingRates, setShippingRates] = useState([]);
   const [selectedRate, setSelectedRate] = useState(null);
   const [loadingRates, setLoadingRates] = useState(false);
@@ -23,10 +22,12 @@ export default function CartPage() {
   const freeShippingThreshold = 50;
   const qualifiesForFreeShipping = subtotal >= freeShippingThreshold;
 
-  const packageTypes = [
-    { id: 'small-envelope', name: 'Small Envelope (Most Items)', description: 'Pins, small accessories, stickers' },
-    { id: 'jumbo-bracelet', name: 'Large Box (Gift Sets)', description: 'Gift boxes, spa kits, large items' },
-  ];
+  // Auto-detect shipping profile based on cart items
+  // If ANY item requires large-box, use large-box
+  const getShippingProfile = () => {
+    const hasLargeItem = cart.some(item => item.shippingProfile === 'large-box');
+    return hasLargeItem ? 'large-box' : 'small-envelope';
+  };
 
   const calculateShipping = async () => {
     if (zipCode.length !== 5) {
@@ -38,6 +39,8 @@ export default function CartPage() {
     setError('');
     setShippingRates([]);
     setSelectedRate(null);
+
+    const packageType = getShippingProfile();
 
     try {
       const response = await fetch('/api/shipping', {
@@ -189,30 +192,6 @@ export default function CartPage() {
                 <>
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-brand-sage mb-2">
-                      Package Size
-                    </label>
-                    <select
-                      value={packageType}
-                      onChange={(e) => {
-                        setPackageType(e.target.value);
-                        setShippingRates([]);
-                        setSelectedRate(null);
-                      }}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-sage focus:ring-2 focus:ring-brand-mint/50 outline-none"
-                    >
-                      {packageTypes.map((pkg) => (
-                        <option key={pkg.id} value={pkg.id}>
-                          {pkg.name}
-                        </option>
-                      ))}
-                    </select>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {packageTypes.find(p => p.id === packageType)?.description}
-                    </p>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-brand-sage mb-2">
                       Shipping Zip Code
                     </label>
                     <div className="flex gap-2">
@@ -220,7 +199,7 @@ export default function CartPage() {
                         type="text"
                         value={zipCode}
                         onChange={(e) => setZipCode(e.target.value.replace(/\D/g, '').slice(0, 5))}
-                        placeholder="12345"
+                        placeholder="Enter zip code"
                         className="flex-grow px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-sage focus:ring-2 focus:ring-brand-mint/50 outline-none"
                       />
                       <button
