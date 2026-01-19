@@ -10,6 +10,7 @@ const products = [
     price: "32.00",
     category: "Gift Sets",
     image: "https://i.etsystatic.com/42012371/r/il/46986b/7524183824/il_fullxfull.7524183824_f0xb.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "jumbo-friendship-bracelet",
@@ -17,6 +18,7 @@ const products = [
     price: "38.50",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/8ce7a4/5888005579/il_fullxfull.5888005579_sm3z.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "rainbow-zipper-pencil-cases",
@@ -24,6 +26,7 @@ const products = [
     price: "8.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/faa7e0/5609801779/il_fullxfull.5609801779_4wud.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "kids-valentine-countdown",
@@ -31,6 +34,7 @@ const products = [
     price: "32.00",
     category: "Gift Sets",
     image: "https://i.etsystatic.com/42012371/r/il/0853bc/6597768787/il_fullxfull.6597768787_8nzt.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "teen-tween-advent-calendar",
@@ -38,6 +42,7 @@ const products = [
     price: "30.00",
     category: "Gift Sets",
     image: "https://i.etsystatic.com/42012371/r/il/aa22bc/7322461668/il_fullxfull.7322461668_1r12.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "tubby-time-bag",
@@ -45,6 +50,7 @@ const products = [
     price: "15.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/bfde82/5969239582/il_fullxfull.5969239582_ec9c.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "pamper-yourself-set",
@@ -52,6 +58,7 @@ const products = [
     price: "23.00",
     category: "Spa & Beauty",
     image: "https://i.etsystatic.com/42012371/r/il/182d84/6017238711/il_fullxfull.6017238711_tiha.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "going-to-bed-set-small",
@@ -59,6 +66,7 @@ const products = [
     price: "20.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/826ba0/6007312259/il_fullxfull.6007312259_k3pb.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "going-to-bed-mini-set",
@@ -66,6 +74,7 @@ const products = [
     price: "15.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/9db06e/6006071655/il_fullxfull.6006071655_kwui.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "lovely-lavender-kit",
@@ -73,6 +82,7 @@ const products = [
     price: "23.00",
     category: "Spa & Beauty",
     image: "https://i.etsystatic.com/42012371/r/il/c97ae1/7581594477/il_fullxfull.7581594477_ksfj.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "pinktastic-facial-kit",
@@ -80,6 +90,7 @@ const products = [
     price: "23.00",
     category: "Spa & Beauty",
     image: "https://i.etsystatic.com/42012371/r/il/352f1d/7581509995/il_fullxfull.7581509995_94kb.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "outdoor-play-kit",
@@ -87,6 +98,7 @@ const products = [
     price: "10.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/ca5ddd/6008383073/il_fullxfull.6008383073_3lf7.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "hello-kitty-friends-purse",
@@ -94,6 +106,7 @@ const products = [
     price: "15.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/903ed9/5568980902/il_fullxfull.5568980902_l1xl.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "sequined-heart-crossbody",
@@ -101,6 +114,7 @@ const products = [
     price: "12.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/6d1238/5629549371/il_fullxfull.5629549371_2gws.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "enchanting-unicorn-purse",
@@ -108,6 +122,7 @@ const products = [
     price: "19.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/f8b196/5788503614/il_fullxfull.5788503614_iyq1.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "kitty-cat-purse",
@@ -115,6 +130,7 @@ const products = [
     price: "19.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/bc4e3d/5808460964/il_fullxfull.5808460964_6za7.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "mermaid-tail-coin-keeper",
@@ -122,6 +138,7 @@ const products = [
     price: "10.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/1af771/5636095195/il_fullxfull.5636095195_4z6l.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "sweet-straw-bag",
@@ -129,6 +146,7 @@ const products = [
     price: "19.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/1d5ab8/5620420985/il_fullxfull.5620420985_oax6.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "hello-beautiful-spa-set",
@@ -136,6 +154,7 @@ const products = [
     price: "23.00",
     category: "Spa & Beauty",
     image: "https://i.etsystatic.com/42012371/r/il/f5fbbb/5959337220/il_fullxfull.5959337220_gmb9.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "little-baker-set",
@@ -143,6 +162,7 @@ const products = [
     price: "15.99",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/72b1c7/5459680443/il_fullxfull.5459680443_cdfx.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "water-fun-kit",
@@ -150,6 +170,7 @@ const products = [
     price: "10.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/ac7323/5534132300/il_fullxfull.5534132300_pm3t.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "bedtime-pack",
@@ -157,6 +178,7 @@ const products = [
     price: "10.00",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/16f223/5522916592/il_fullxfull.5522916592_nori.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "milkshake-party-favor",
@@ -164,6 +186,7 @@ const products = [
     price: "14.00",
     category: "Gift Sets",
     image: "https://i.etsystatic.com/42012371/r/il/df1828/5397444566/il_fullxfull.5397444566_ahex.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "ultimate-spa-kit",
@@ -171,6 +194,7 @@ const products = [
     price: "23.00",
     category: "Spa & Beauty",
     image: "https://i.etsystatic.com/42012371/r/il/cb6dcf/5967458892/il_fullxfull.5967458892_9mk7.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "personalized-kids-sunglasses",
@@ -178,6 +202,7 @@ const products = [
     price: "12.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/54ce5d/5855690122/il_fullxfull.5855690122_fng6.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "bath-spa-set",
@@ -185,6 +210,7 @@ const products = [
     price: "23.00",
     category: "Spa & Beauty",
     image: "https://i.etsystatic.com/42012371/r/il/3f3061/6007383455/il_fullxfull.6007383455_fd8y.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "bunny-bunting-easter",
@@ -192,6 +218,7 @@ const products = [
     price: "20.00",
     category: "Home Decor",
     image: "https://i.etsystatic.com/42012371/r/il/3f8c81/5882309683/il_fullxfull.5882309683_cwvi.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "christmas-advent-calendar",
@@ -199,6 +226,7 @@ const products = [
     price: "30.00",
     category: "Gift Sets",
     image: "https://i.etsystatic.com/42012371/r/il/b1f81d/5536624188/il_fullxfull.5536624188_gsez.jpg",
+    shippingProfile: "large-box",
   },
   {
     slug: "sundae-coin-clutch",
@@ -206,6 +234,7 @@ const products = [
     price: "12.00",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/b19ed0/5767275245/il_fullxfull.5767275245_7min.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "shark-coin-pouch",
@@ -213,6 +242,7 @@ const products = [
     price: "12.99",
     category: "Accessories",
     image: "https://i.etsystatic.com/42012371/r/il/838ac5/6970523894/il_fullxfull.6970523894_a8u7.jpg",
+    shippingProfile: "small-envelope",
   },
   {
     slug: "little-artist-starter-kit",
@@ -220,6 +250,7 @@ const products = [
     price: "13.50",
     category: "Kids",
     image: "https://i.etsystatic.com/42012371/r/il/088acb/6990615820/il_fullxfull.6990615820_7dz0.jpg",
+    shippingProfile: "small-envelope",
   },
 ];
 
