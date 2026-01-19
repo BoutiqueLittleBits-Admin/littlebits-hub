@@ -3,14 +3,12 @@ import { useState } from 'react';
 import { useCart } from '../components/CartContext';
 import Toast from '../components/Toast';
 
-// Etsy Products with Real Images
 const products = [
   {
     slug: "teen-woman-valentine-countdown",
     name: "Teen/Woman Valentine Countdown - 14 Days of Joy",
     price: "32.00",
     category: "Gift Sets",
-    description: "Spread the LOVE! The teen or woman in your life will enjoy counting down to Valentine's Day. For 14 days starting February 1st, they will delight in opening a little gift each day. Ages 12 and up.",
     image: "https://i.etsystatic.com/42012371/r/il/46986b/7524183824/il_fullxfull.7524183824_f0xb.jpg",
   },
   {
@@ -18,7 +16,6 @@ const products = [
     name: "Jumbo Friendship Bracelet - Custom Made to Order",
     price: "38.50",
     category: "Accessories",
-    description: "Elevate your space with personalized decor! These handcrafted, vibrant oversized bracelets serve as delightful room embellishments and photography props. Perfect for baby photos, school photos, birthdays, and special events. Personalize with up to 15 letters!",
     image: "https://i.etsystatic.com/42012371/r/il/8ce7a4/5888005579/il_fullxfull.5888005579_sm3z.jpg",
   },
   {
@@ -26,7 +23,6 @@ const products = [
     name: "Rainbow Zipper Pencil Cases - Stylish Organizers",
     price: "8.00",
     category: "Kids",
-    description: "Upgrade your stationery game with our trendy Pencil Cases! Each case features a sleek design and vibrant rainbow zipper, adding a pop of color to your everyday essentials.",
     image: "https://i.etsystatic.com/42012371/r/il/faa7e0/5609801779/il_fullxfull.5609801779_4wud.jpg",
   },
   {
@@ -34,7 +30,6 @@ const products = [
     name: "Kids Valentine Countdown - 14 Days of Surprises",
     price: "32.00",
     category: "Gift Sets",
-    description: "Spread the LOVE! Children ages 3-10 will enjoy counting down to Valentine's Day. For 14 days, kids will delight in opening a little gift each day.",
     image: "https://i.etsystatic.com/42012371/r/il/0853bc/6597768787/il_fullxfull.6597768787_8nzt.jpg",
   },
   {
@@ -42,7 +37,6 @@ const products = [
     name: "Teen & Tween Advent Calendar - Holiday Countdown",
     price: "30.00",
     category: "Gift Sets",
-    description: "Celebrate the season with our custom-filled Teen/Tween Girl Advent Calendars! Each box makes every day of December exciting with fun, stylish, and self-care surprises.",
     image: "https://i.etsystatic.com/42012371/r/il/aa22bc/7322461668/il_fullxfull.7322461668_1r12.jpg",
   },
   {
@@ -50,7 +44,6 @@ const products = [
     name: "Tubby Time Bag - Bath Fun Kit for Kids",
     price: "15.00",
     category: "Kids",
-    description: "Elevate bath time fun with our Tubby Time Bag! Includes bath toy, washcloth, toothbrush, cup, and body wash.",
     image: "https://i.etsystatic.com/42012371/r/il/bfde82/5969239582/il_fullxfull.5969239582_ec9c.jpg",
   },
   {
@@ -58,7 +51,6 @@ const products = [
     name: "Pamper Yourself Set - Ultimate Self-Care Kit",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in well-deserved self-care! This beauty kit includes hand cream, cuticle oil, nail polish, nail file, toe separator, and cozy socks.",
     image: "https://i.etsystatic.com/42012371/r/il/182d84/6017238711/il_fullxfull.6017238711_tiha.jpg",
   },
   {
@@ -66,7 +58,6 @@ const products = [
     name: "Going To Bed Set - Sweet Dreams Bundle",
     price: "20.00",
     category: "Kids",
-    description: "Indulge your child's imagination with this enchanting bedtime bundle! Features a charming plush companion, soothing nightlight, and captivating bedtime story.",
     image: "https://i.etsystatic.com/42012371/r/il/826ba0/6007312259/il_fullxfull.6007312259_k3pb.jpg",
   },
   {
@@ -74,7 +65,6 @@ const products = [
     name: "Going To Bed Mini Set - Plush, Nightlight & Story",
     price: "15.00",
     category: "Kids",
-    description: "Prepare your little one for peaceful sleep with this adorable mini set! Includes a plush lovey, nightlight, and bedtime story.",
     image: "https://i.etsystatic.com/42012371/r/il/9db06e/6006071655/il_fullxfull.6006071655_kwui.jpg",
   },
   {
@@ -82,7 +72,6 @@ const products = [
     name: "Lovely Lavender Spa Kit - Complete Relaxation Set",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in self-care with our Lovely Lavender Kit! Includes lavender caddy, spa headband, scrunchie, mirror, face mask, lip mask, and eye mask.",
     image: "https://i.etsystatic.com/42012371/r/il/c97ae1/7581594477/il_fullxfull.7581594477_ksfj.jpg",
   },
   {
@@ -90,7 +79,6 @@ const products = [
     name: "PINKtastic Facial Kit - Pink Spa Essentials",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in self-care with our PINKtastic Facial Kit! Includes pink cosmetic bag, headband, wristbands, scrunchie, compact, and masks.",
     image: "https://i.etsystatic.com/42012371/r/il/352f1d/7581509995/il_fullxfull.7581509995_94kb.jpg",
   },
   {
@@ -98,7 +86,6 @@ const products = [
     name: "Outdoor Play Kit - Fun-Filled Activities",
     price: "10.00",
     category: "Kids",
-    description: "Encourage outdoor fun! Includes jump rope, jacks, bubbles, sidewalk chalk, and fun fan.",
     image: "https://i.etsystatic.com/42012371/r/il/ca5ddd/6008383073/il_fullxfull.6008383073_3lf7.jpg",
   },
   {
@@ -106,7 +93,6 @@ const products = [
     name: "Hello Kitty & Friends Purse with Add-Ons",
     price: "15.00",
     category: "Accessories",
-    description: "Upgrade your style with our adorable Sanrio character purses! Add-on fashion sets available for extra fun!",
     image: "https://i.etsystatic.com/42012371/r/il/903ed9/5568980902/il_fullxfull.5568980902_l1xl.jpg",
   },
   {
@@ -114,7 +100,6 @@ const products = [
     name: "Sequined Heart Crossbody Bag - Glamorous Sparkle",
     price: "12.00",
     category: "Accessories",
-    description: "Indulge in glamour with our Sequined Heart Crossbody Bags! Adorned with dazzling sequins creating a stunning shimmer.",
     image: "https://i.etsystatic.com/42012371/r/il/6d1238/5629549371/il_fullxfull.5629549371_2gws.jpg",
   },
   {
@@ -122,7 +107,6 @@ const products = [
     name: "Enchanting Unicorn Purse - Magical Style",
     price: "19.00",
     category: "Accessories",
-    description: "Discover the enchantment of our Unicorn Purses! Available in four mesmerizing colors.",
     image: "https://i.etsystatic.com/42012371/r/il/f8b196/5788503614/il_fullxfull.5788503614_iyq1.jpg",
   },
   {
@@ -130,7 +114,6 @@ const products = [
     name: "Adorable Kitty Cat Purse - Crossbody Bag",
     price: "19.00",
     category: "Accessories",
-    description: "Our charming Kitty Cat Purse is a purr-fect addition to your wardrobe! Available in various colors.",
     image: "https://i.etsystatic.com/42012371/r/il/bc4e3d/5808460964/il_fullxfull.5808460964_6za7.jpg",
   },
   {
@@ -138,7 +121,6 @@ const products = [
     name: "Mermaid Tail Coin Keeper - Fun Coin Bag",
     price: "10.00",
     category: "Accessories",
-    description: "Magical Mermaid Tails - Dive into savings! This coin bag makes saving fun for kids.",
     image: "https://i.etsystatic.com/42012371/r/il/1af771/5636095195/il_fullxfull.5636095195_4z6l.jpg",
   },
   {
@@ -146,7 +128,6 @@ const products = [
     name: "Sweet Straw Bag - Darling Crossbody",
     price: "19.00",
     category: "Accessories",
-    description: "Indulge in the sweetness of our charming Sweet Straw Bag! Features a drawstring closure.",
     image: "https://i.etsystatic.com/42012371/r/il/1d5ab8/5620420985/il_fullxfull.5620420985_oax6.jpg",
   },
   {
@@ -154,7 +135,6 @@ const products = [
     name: "Hello Beautiful Spa Set - Complete Pampering Kit",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in self-care! Includes headband, scrunchie, face mask, lip and eye mask, nails, lotion, and bunny keychain.",
     image: "https://i.etsystatic.com/42012371/r/il/f5fbbb/5959337220/il_fullxfull.5959337220_gmb9.jpg",
   },
   {
@@ -162,7 +142,6 @@ const products = [
     name: "Little Baker Set - Kids Baking Fun",
     price: "15.99",
     category: "Kids",
-    description: "Ignite your child's culinary creativity! Watch them don their apron and baker's hat, ready to whip up something scrumptious.",
     image: "https://i.etsystatic.com/42012371/r/il/72b1c7/5459680443/il_fullxfull.5459680443_cdfx.jpg",
   },
   {
@@ -170,7 +149,6 @@ const products = [
     name: "Ultimate Water Fun Kit for Summer",
     price: "10.00",
     category: "Kids",
-    description: "Dive into endless aquatic adventures! Beach toys, balloons, sunglasses, and more.",
     image: "https://i.etsystatic.com/42012371/r/il/ac7323/5534132300/il_fullxfull.5534132300_pm3t.jpg",
   },
   {
@@ -178,7 +156,6 @@ const products = [
     name: "Bedtime Pack for Sweet Dreams",
     price: "10.00",
     category: "Kids",
-    description: "Transform bedtime into a magical journey! Includes a book, plush lovey, and nightlight with LED lights.",
     image: "https://i.etsystatic.com/42012371/r/il/16f223/5522916592/il_fullxfull.5522916592_nori.jpg",
   },
   {
@@ -186,7 +163,6 @@ const products = [
     name: "Fancy Milkshake Party Favor Cup",
     price: "14.00",
     category: "Gift Sets",
-    description: "A sweet token for your child's cherished guests! Hand cream, nail polish, lip balm, rings, and hair tie.",
     image: "https://i.etsystatic.com/42012371/r/il/df1828/5397444566/il_fullxfull.5397444566_ahex.jpg",
   },
   {
@@ -194,7 +170,6 @@ const products = [
     name: "Ultimate Self-Care Spa Kit for Women",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in well-deserved self-care! Sheet face mask, eye mask, lip mask, spa headband, and sleep mask.",
     image: "https://i.etsystatic.com/42012371/r/il/cb6dcf/5967458892/il_fullxfull.5967458892_9mk7.jpg",
   },
   {
@@ -202,7 +177,6 @@ const products = [
     name: "Personalized Kids Sunglasses - Custom Shades",
     price: "12.00",
     category: "Accessories",
-    description: "Upgrade your child's sunny style with Personalized Sunnies! Custom shades for outdoor adventures.",
     image: "https://i.etsystatic.com/42012371/r/il/54ce5d/5855690122/il_fullxfull.5855690122_fng6.jpg",
   },
   {
@@ -210,7 +184,6 @@ const products = [
     name: "Bath Spa Set - Complete Relaxation Kit",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in a luxurious bath experience! Includes hair turban, makeup removal cloth, loofa, and more.",
     image: "https://i.etsystatic.com/42012371/r/il/3f3061/6007383455/il_fullxfull.6007383455_fd8y.jpg",
   },
   {
@@ -218,7 +191,6 @@ const products = [
     name: "Handcrafted Bunny Bunting - Easter Decor",
     price: "20.00",
     category: "Home Decor",
-    description: "Welcome spring with our enchanting handmade Bunny Bunting! Perfect for Easter decorations.",
     image: "https://i.etsystatic.com/42012371/r/il/3f8c81/5882309683/il_fullxfull.5882309683_cwvi.jpg",
   },
   {
@@ -226,7 +198,6 @@ const products = [
     name: "Christmas Countdown Advent Calendar",
     price: "30.00",
     category: "Gift Sets",
-    description: "Make the countdown to Christmas magical! Custom-filled with toys, novelties, games, and treats.",
     image: "https://i.etsystatic.com/42012371/r/il/b1f81d/5536624188/il_fullxfull.5536624188_gsez.jpg",
   },
   {
@@ -234,7 +205,6 @@ const products = [
     name: "Sundae Coin Clutch with Add-On Options",
     price: "12.00",
     category: "Accessories",
-    description: "A sweet addition to your accessory collection! Add-on options: Fashionista, Little Lady, Note Taker, or Player sets.",
     image: "https://i.etsystatic.com/42012371/r/il/b19ed0/5767275245/il_fullxfull.5767275245_7min.jpg",
   },
   {
@@ -242,7 +212,6 @@ const products = [
     name: "Shark Coin Zipper Pouches",
     price: "12.99",
     category: "Accessories",
-    description: "Indulge in fabulous shark cuteness! Make a splash with our Shark Zippered Coin Keeper Bags.",
     image: "https://i.etsystatic.com/42012371/r/il/838ac5/6970523894/il_fullxfull.6970523894_a8u7.jpg",
   },
   {
@@ -250,7 +219,6 @@ const products = [
     name: "Little Artist Starter Kit - Creative Fun",
     price: "13.50",
     category: "Kids",
-    description: "Introduce your child to the world of art! Includes apron, watercolor paint set, paintbrush, wooden easel, and mini canvas.",
     image: "https://i.etsystatic.com/42012371/r/il/088acb/6990615820/il_fullxfull.6990615820_7dz0.jpg",
   },
 ];
@@ -343,11 +311,11 @@ export default function ShopPage() {
             {filteredProducts.map((item, i) => (
               <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
                 <a href={`/shop/${item.slug}`}>
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-52 overflow-hidden bg-gray-100">
                     <img 
                       src={item.image} 
                       alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
                     />
                   </div>
                 </a>
