@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCart } from './CartContext';
 import CartDropdown from './CartDropdown';
 
@@ -7,6 +7,18 @@ export default function Header() {
   const { cartCount } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const cartRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setCartOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -18,19 +30,20 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 text-brand-sage font-medium">
           <a href="/" className="hover:text-brand-coral transition-colors">Home</a>
           <a href="/shop" className="hover:text-brand-coral transition-colors">Shop</a>
+          <a href="/stores" className="hover:text-brand-coral transition-colors">Our Stores</a>
           <a href="/about" className="hover:text-brand-coral transition-colors">About</a>
           <a href="/contact" className="hover:text-brand-coral transition-colors">Contact</a>
         </nav>
 
         <div className="flex items-center gap-4">
-          <div className="relative">
+          <div className="relative" ref={cartRef}>
             <button 
               onClick={() => setCartOpen(!cartOpen)}
               className="bg-brand-sage text-white px-4 py-2 rounded-full font-semibold hover:bg-brand-coral transition-colors"
             >
               🛒 Cart ({cartCount})
             </button>
-            <CartDropdown isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+            {cartOpen && <CartDropdown />}
           </div>
           
           <button 
@@ -47,6 +60,7 @@ export default function Header() {
           <div className="flex flex-col gap-4 text-brand-sage font-medium">
             <a href="/" className="hover:text-brand-coral transition-colors py-2">Home</a>
             <a href="/shop" className="hover:text-brand-coral transition-colors py-2">Shop</a>
+            <a href="/stores" className="hover:text-brand-coral transition-colors py-2">Our Stores</a>
             <a href="/about" className="hover:text-brand-coral transition-colors py-2">About</a>
             <a href="/contact" className="hover:text-brand-coral transition-colors py-2">Contact</a>
           </div>
