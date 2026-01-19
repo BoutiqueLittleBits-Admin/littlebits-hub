@@ -4,7 +4,6 @@ import { useCart } from '../../components/CartContext';
 import { useParams } from 'next/navigation';
 import Toast from '../../components/Toast';
 
-// All Etsy Products with Real Images
 const allProducts = [
   {
     slug: "teen-woman-valentine-countdown",
@@ -19,7 +18,7 @@ const allProducts = [
     name: "Jumbo Friendship Bracelet - Custom Made to Order",
     price: "38.50",
     category: "Accessories",
-    description: "Elevate your space with personalized decor! These handcrafted, vibrant oversized bracelets serve as delightful room embellishments and photography props. Perfect for baby photos, school photos, birthdays, classroom displays, and special events. Personalize with up to 15 letters! Made with bright, durable balls/shapes in a variety of fun colors that you choose. Ideal for nursery decor, birthday party props, classroom displays, unique personalized gifts, photo shoots, and party station indicators.",
+    description: "Elevate your space with personalized decor! These handcrafted, vibrant oversized bracelets serve as delightful room embellishments and photography props. Perfect for baby photos, school photos, birthdays, classroom displays, and special events. Personalize with up to 15 letters! Made with bright, durable balls and shapes in a variety of fun colors that you choose.",
     image: "https://i.etsystatic.com/42012371/r/il/8ce7a4/5888005579/il_fullxfull.5888005579_sm3z.jpg",
   },
   {
@@ -43,7 +42,7 @@ const allProducts = [
     name: "Teen & Tween Advent Calendar - Holiday Countdown",
     price: "30.00",
     category: "Gift Sets",
-    description: "Celebrate the season with our custom-filled Teen/Tween Girl Advent Calendars! Each box makes every day of December exciting with fun, stylish, and self-care surprises chosen just for her. From beauty products and accessories to fun novelties, each day of the countdown brings joy and anticipation!",
+    description: "Celebrate the season with our custom-filled Teen and Tween Girl Advent Calendars! Each box makes every day of December exciting with fun, stylish, and self-care surprises chosen just for her. From beauty products and accessories to fun novelties, each day of the countdown brings joy and anticipation!",
     image: "https://i.etsystatic.com/42012371/r/il/aa22bc/7322461668/il_fullxfull.7322461668_1r12.jpg",
   },
   {
@@ -195,7 +194,7 @@ const allProducts = [
     name: "Ultimate Self-Care Spa Kit for Women",
     price: "23.00",
     category: "Spa & Beauty",
-    description: "Indulge in well-deserved self-care with our Pamper & Relax kit! Includes sheet face mask, eye mask, lip mask, spa headband, and sleep mask. The perfect pampering gift to relax and rejuvenate!",
+    description: "Indulge in well-deserved self-care with our Pamper and Relax kit! Includes sheet face mask, eye mask, lip mask, spa headband, and sleep mask. The perfect pampering gift to relax and rejuvenate!",
     image: "https://i.etsystatic.com/42012371/r/il/cb6dcf/5967458892/il_fullxfull.5967458892_9mk7.jpg",
   },
   {
@@ -294,11 +293,11 @@ export default function ProductPage() {
         </a>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
-          <div className="rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-gray-100 rounded-2xl overflow-hidden shadow-lg flex items-center justify-center p-6">
             <img 
               src={product.image} 
               alt={product.name}
-              className="w-full h-auto object-cover"
+              className="max-w-full max-h-96 object-contain"
             />
           </div>
           
@@ -331,11 +330,11 @@ export default function ProductPage() {
               {relatedProducts.map((item, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-200 group">
                   <a href={`/shop/${item.slug}`}>
-                    <div className="h-40 overflow-hidden">
+                    <div className="h-40 overflow-hidden bg-gray-100 flex items-center justify-center">
                       <img 
                         src={item.image} 
                         alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 p-3"
                       />
                     </div>
                   </a>
