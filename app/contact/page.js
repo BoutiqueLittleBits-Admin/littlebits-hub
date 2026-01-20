@@ -112,11 +112,11 @@ export default function ContactPage() {
                     name="subject"
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-sage focus:ring-2 focus:ring-brand-mint/50 outline-none transition-all"
                   >
-                    <option>General Inquiry</option>
-                    <option>Order Question</option>
-                    <option>Custom Order Request</option>
-                    <option>Wholesale Inquiry</option>
-                    <option>Other</option>
+                    <option value="general">General Inquiry</option>
+<option value="order">Order Question</option>
+<option value="custom">Custom Order Request</option>
+<option value="expedited">Expedited Shipping Request</option>
+<option value="other">Other</option>
                   </select>
                 </div>
                 <div>
