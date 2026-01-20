@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 
+// Live mode enabled January 2026
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
@@ -59,7 +60,7 @@ export async function POST(request) {
     };
     
     if (giftMessage) {
-      metadata.giftMessage = giftMessage.substring(0, 500); // Stripe metadata limit
+      metadata.giftMessage = giftMessage.substring(0, 500);
     }
 
     // Create Stripe checkout session
@@ -88,4 +89,3 @@ export async function POST(request) {
     return Response.json({ error: 'Checkout failed' }, { status: 500 });
   }
 }
-
