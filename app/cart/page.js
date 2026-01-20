@@ -9,6 +9,13 @@ export default function CartPage() {
   const [selectedRate, setSelectedRate] = useState(null);
   const [loadingRates, setLoadingRates] = useState(false);
   const [error, setError] = useState('');
+  
+  // Gift options
+  const [giftWrap, setGiftWrap] = useState(false);
+  const [giftMessage, setGiftMessage] = useState('');
+  const [showGiftMessage, setShowGiftMessage] = useState(false);
+  
+  const GIFT_WRAP_PRICE = 3.50;
 
   if (!isLoaded) {
     return (
@@ -19,11 +26,12 @@ export default function CartPage() {
   }
 
   const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * (item.quantity || 1)), 0);
+  const giftWrapTotal = giftWrap ? GIFT_WRAP_PRICE : 0;
+  const cartSubtotal = subtotal + giftWrapTotal;
   const freeShippingThreshold = 50;
-  const qualifiesForFreeShipping = subtotal >= freeShippingThreshold;
+  const qualifiesForFreeShipping = cartSubtotal >= freeShippingThreshold;
 
   // Auto-detect shipping profile based on cart items
-  // If ANY item requires large-box, use large-box
   const getShippingProfile = () => {
     const hasLargeItem = cart.some(item => item.shippingProfile === 'large-box');
     return hasLargeItem ? 'large-box' : 'small-envelope';
@@ -79,6 +87,8 @@ export default function CartPage() {
         body: JSON.stringify({
           items: cart,
           shippingRate: qualifiesForFreeShipping ? null : selectedRate,
+          giftWrap: giftWrap,
+          giftMessage: giftMessage.trim() || null,
         }),
       });
 
@@ -118,7 +128,8 @@ export default function CartPage() {
         <h1 className="text-4xl font-bold text-brand-sage mb-8">Your Cart</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-6">
+            {/* Cart Items */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
               {cart.map((item, index) => (
                 <div key={index} className="flex items-center gap-4 p-6 border-b border-gray-100 last:border-b-0">
@@ -157,26 +168,86 @@ export default function CartPage() {
                 </div>
               ))}
             </div>
+
+            {/* Gift Options */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-semibold text-brand-sage mb-4">🎁 Gift Options</h2>
+              
+              {/* Gift Wrap */}
+              <label className="flex items-center gap-3 cursor-pointer mb-4">
+                <input
+                  type="checkbox"
+                  checked={giftWrap}
+                  onChange={(e) => setGiftWrap(e.target.checked)}
+                  className="w-5 h-5 rounded border-gray-300 text-brand-coral focus:ring-brand-coral"
+                />
+                <div className="flex-grow">
+                  <span className="font-medium text-brand-sage">Add Gift Wrapping</span>
+                  <p className="text-sm text-gray-500">Beautifully wrapped and ready to give</p>
+                </div>
+                <span className="font-semibold text-brand-coral">+${GIFT_WRAP_PRICE.toFixed(2)}</span>
+              </label>
+
+              {/* Gift Message Toggle */}
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showGiftMessage}
+                  onChange={(e) => {
+                    setShowGiftMessage(e.target.checked);
+                    if (!e.target.checked) setGiftMessage('');
+                  }}
+                  className="w-5 h-5 rounded border-gray-300 text-brand-coral focus:ring-brand-coral"
+                />
+                <div>
+                  <span className="font-medium text-brand-sage">Add a Gift Message</span>
+                  <p className="text-sm text-gray-500">Include a personalized note (FREE)</p>
+                </div>
+              </label>
+
+              {/* Gift Message Input */}
+              {showGiftMessage && (
+                <div className="mt-4">
+                  <textarea
+                    value={giftMessage}
+                    onChange={(e) => setGiftMessage(e.target.value.slice(0, 200))}
+                    placeholder="Write your message here..."
+                    rows={3}
+                    maxLength={200}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-sage focus:ring-2 focus:ring-brand-mint/50 outline-none resize-none"
+                  />
+                  <p className="text-xs text-gray-400 mt-1 text-right">{giftMessage.length}/200 characters</p>
+                </div>
+              )}
+            </div>
           </div>
 
+          {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
               <h2 className="text-xl font-bold text-brand-sage mb-6">Order Summary</h2>
 
-              <div className="flex justify-between mb-4">
+              <div className="flex justify-between mb-2">
                 <span className="text-gray-600">Subtotal</span>
                 <span className="font-semibold">${subtotal.toFixed(2)}</span>
               </div>
 
+              {giftWrap && (
+                <div className="flex justify-between mb-2">
+                  <span className="text-gray-600">Gift Wrap</span>
+                  <span className="font-semibold">${GIFT_WRAP_PRICE.toFixed(2)}</span>
+                </div>
+              )}
+
               {!qualifiesForFreeShipping && (
                 <div className="mb-6 p-4 bg-brand-mint/10 rounded-xl">
                   <p className="text-sm text-brand-sage mb-2">
-                    Add <strong>${(freeShippingThreshold - subtotal).toFixed(2)}</strong> more for FREE shipping!
+                    Add <strong>${(freeShippingThreshold - cartSubtotal).toFixed(2)}</strong> more for FREE shipping!
                   </p>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-brand-coral rounded-full h-2 transition-all"
-                      style={{ width: `${Math.min((subtotal / freeShippingThreshold) * 100, 100)}%` }}
+                      style={{ width: `${Math.min((cartSubtotal / freeShippingThreshold) * 100, 100)}%` }}
                     ></div>
                   </div>
                 </div>
@@ -270,7 +341,7 @@ export default function CartPage() {
               <div className="flex justify-between mb-6">
                 <span className="text-lg font-bold text-brand-sage">Total</span>
                 <span className="text-lg font-bold text-brand-coral">
-                  ${(subtotal + (qualifiesForFreeShipping ? 0 : (selectedRate?.price || 0))).toFixed(2)}
+                  ${(cartSubtotal + (qualifiesForFreeShipping ? 0 : (selectedRate?.price || 0))).toFixed(2)}
                 </span>
               </div>
 
