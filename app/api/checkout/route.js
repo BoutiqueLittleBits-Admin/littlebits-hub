@@ -5,6 +5,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
+    // Debug: Log which key type is being used
+    const keyType = process.env.STRIPE_SECRET_KEY?.startsWith('sk_live') ? 'LIVE' : 'TEST';
+    console.log('Stripe key type:', keyType);
+    console.log('Key prefix:', process.env.STRIPE_SECRET_KEY?.substring(0, 12));
+
     const { items, shippingRate, giftWrap, giftMessage } = await request.json();
 
     if (!items || items.length === 0) {
@@ -33,7 +38,7 @@ export async function POST(request) {
             name: '🎁 Gift Wrapping',
             description: 'Beautifully wrapped and ready to give',
           },
-          unit_amount: 350, // $3.50
+          unit_amount: 350,
         },
         quantity: 1,
       });
@@ -83,6 +88,7 @@ export async function POST(request) {
       },
     });
 
+    console.log('Session created:', session.id);
     return Response.json({ url: session.url });
   } catch (error) {
     console.error('Checkout error:', error);
