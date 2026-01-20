@@ -1,24 +1,13 @@
-// app/api/checkout/route.js
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    const { items, shippingRate, shippingAddress } = await request.json();
+    const { items, shippingRate, giftWrap, giftMessage } = await request.json();
 
-    // Calculate subtotal
-    const subtotal = items.reduce((sum, item) => {
-      return sum + (parseFloat(item.price) * item.quantity);
-    }, 0);
-
-    // Determine shipping cost (FREE over $50)
-    let shippingCost = 0;
-    let shippingLabel = 'FREE Shipping';
-    
-    if (subtotal < 50 && shippingRate) {
-      shippingCost = shippingRate.price;
-      shippingLabel = `${shippingRate.service} (${shippingRate.estimatedDays} days)`;
+    if (!items || items.length === 0) {
+      return Response.json({ error: 'No items in cart' }, { status: 400 });
     }
 
     // Build line items for Stripe
@@ -31,21 +20,46 @@ export async function POST(request) {
         },
         unit_amount: Math.round(parseFloat(item.price) * 100),
       },
-      quantity: item.quantity,
+      quantity: item.quantity || 1,
     }));
 
-    // Add shipping as a line item if not free
-    if (shippingCost > 0) {
+    // Add gift wrap as a line item if selected
+    if (giftWrap) {
       lineItems.push({
         price_data: {
           currency: 'usd',
           product_data: {
-            name: `Shipping - ${shippingLabel}`,
+            name: '🎁 Gift Wrapping',
+            description: 'Beautifully wrapped and ready to give',
           },
-          unit_amount: Math.round(shippingCost * 100),
+          unit_amount: 350, // $3.50
         },
         quantity: 1,
       });
+    }
+
+    // Add shipping as a line item if not free shipping
+    if (shippingRate) {
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: `Shipping - ${shippingRate.service}`,
+            description: `${shippingRate.estimatedDays} business days via ${shippingRate.carrier}`,
+          },
+          unit_amount: Math.round(shippingRate.price * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Build metadata for order processing
+    const metadata = {
+      giftWrap: giftWrap ? 'yes' : 'no',
+    };
+    
+    if (giftMessage) {
+      metadata.giftMessage = giftMessage.substring(0, 500); // Stripe metadata limit
     }
 
     // Create Stripe checkout session
@@ -53,21 +67,24 @@ export async function POST(request) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.boutiquelittlebits.com'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.boutiquelittlebits.com'}/cart`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://littlebits-hub.vercel.app'}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://littlebits-hub.vercel.app'}/cart`,
       shipping_address_collection: {
-        allowed_countries: ['US'],
+        allowed_countries: ['US', 'CA', 'GB', 'AU', 'DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'AT', 'CH', 'IE', 'NZ', 'SE', 'NO', 'DK', 'FI', 'PT', 'PL', 'MX'],
       },
-      metadata: {
-        shippingService: shippingRate?.service || 'FREE',
-        shippingCost: shippingCost.toString(),
-        packageType: shippingRate?.packageType || 'standard',
+      metadata: metadata,
+      custom_text: {
+        shipping_address: {
+          message: giftMessage 
+            ? `🎁 Gift Message: "${giftMessage.substring(0, 100)}${giftMessage.length > 100 ? '...' : ''}"` 
+            : undefined,
+        },
       },
     });
 
     return Response.json({ url: session.url });
   } catch (error) {
     console.error('Checkout error:', error);
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ error: 'Checkout failed' }, { status: 500 });
   }
 }
