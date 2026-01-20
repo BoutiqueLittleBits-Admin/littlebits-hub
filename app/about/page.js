@@ -36,7 +36,7 @@ export default function AboutPage() {
           <div className="bg-gradient-to-br from-brand-coral to-brand-blush rounded-2xl p-8">
             <div className="text-5xl mb-4">✨</div>
             <h3 className="text-xl font-bold text-white mb-2">Sparking Joy</h3>
-            <p className="text-white/90">Since 2025</p>
+            <p className="text-white/90">Since 2023</p>
           </div>
         </div>
       </section>
