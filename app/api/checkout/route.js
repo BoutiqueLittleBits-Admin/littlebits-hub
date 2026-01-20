@@ -88,3 +88,4 @@ export async function POST(request) {
     return Response.json({ error: 'Checkout failed' }, { status: 500 });
   }
 }
+
