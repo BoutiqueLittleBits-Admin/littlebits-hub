@@ -1,48 +1,52 @@
 export default function Footer() {
   return (
-    <footer className="bg-brand-sage text-white mt-20">
+    <footer className="bg-brand-coral/10 mt-20">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-xl font-bold mb-4">✨ Boutique Little Bits</h3>
-            <p className="text-brand-mint">
-              Creating moments of joy with curated, colorful surprises.
+          
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <h3 className="text-xl font-bold text-brand-sage mb-4">✨ Boutique Little Bits</h3>
+            <p className="text-gray-600 text-sm">
+              Hand-curated gifts made with intention and thoughtfulness. Sparking joy since 2023.
             </p>
           </div>
+
+          {/* Shop */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <div className="flex flex-col gap-2 text-brand-mint">
-              <a href="/shop" className="hover:text-white transition-colors">Shop All</a>
-              <a href="/about" className="hover:text-white transition-colors">About Us</a>
-              <a href="/contact" className="hover:text-white transition-colors">Contact</a>
-            </div>
+            <h4 className="font-semibold text-brand-sage mb-4">Shop</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="/shop" className="text-gray-600 hover:text-brand-coral transition-colors">All Products</a></li>
+              <li><a href="/cart" className="text-gray-600 hover:text-brand-coral transition-colors">Cart</a></li>
+            </ul>
           </div>
+
+          {/* Help */}
           <div>
-            <h4 className="font-semibold mb-4">Also Find Us On</h4>
-            <div className="flex flex-col gap-2 text-brand-mint">
-              <a href="https://www.ebay.com/usr/littlebitsboutique" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-                🛒 eBay Store
-              </a>
-              <a href="https://www.etsy.com/shop/BoutiqueLittleBits" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-                🧡 Etsy Shop
-              </a>
-            </div>
+            <h4 className="font-semibold text-brand-sage mb-4">Help</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="/faq" className="text-gray-600 hover:text-brand-coral transition-colors">FAQ</a></li>
+              <li><a href="/shipping" className="text-gray-600 hover:text-brand-coral transition-colors">Shipping Policy</a></li>
+              <li><a href="/returns" className="text-gray-600 hover:text-brand-coral transition-colors">Returns & Refunds</a></li>
+              <li><a href="/contact" className="text-gray-600 hover:text-brand-coral transition-colors">Contact Us</a></li>
+            </ul>
           </div>
+
+          {/* About */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
-            <div className="flex flex-col gap-2 text-brand-mint">
-              <a href="mailto:holleeann@boutiquelittlebits.com" className="hover:text-white transition-colors flex items-center gap-2">
-                💌 holleeann@boutiquelittlebits.com
-              </a>
-            </div>
-            <div className="flex gap-4 text-2xl mt-4">
-              <a href="#" className="hover:text-brand-blush transition-colors">📸</a>
-              <a href="#" className="hover:text-brand-blush transition-colors">🎵</a>
-            </div>
+            <h4 className="font-semibold text-brand-sage mb-4">About</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="/about" className="text-gray-600 hover:text-brand-coral transition-colors">Our Story</a></li>
+              <li><a href="/stores" className="text-gray-600 hover:text-brand-coral transition-colors">Our Stores</a></li>
+            </ul>
           </div>
+
         </div>
-        <div className="border-t border-brand-mint/30 mt-8 pt-8 text-center text-brand-mint">
-          © 2025 Boutique Little Bits. Made with 💝
+
+        <div className="border-t border-brand-coral/20 mt-8 pt-8 text-center">
+          <p className="text-gray-500 text-sm">
+            © 2023-{new Date().getFullYear()} Boutique Little Bits. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
