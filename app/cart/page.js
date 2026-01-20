@@ -239,28 +239,28 @@ export default function CartPage() {
                 </div>
               )}
 
-              {!qualifiesForFreeShipping && (
-                <div className="mb-6 p-4 bg-brand-mint/10 rounded-xl">
-                  <p className="text-sm text-brand-sage mb-2">
-                    Add <strong>${(freeShippingThreshold - cartSubtotal).toFixed(2)}</strong> more for FREE shipping!
-                  </p>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-brand-coral rounded-full h-2 transition-all"
-                      style={{ width: `${Math.min((cartSubtotal / freeShippingThreshold) * 100, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              )}
-
               {qualifiesForFreeShipping ? (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+                /* FREE SHIPPING - No zip code needed */
+                <div className="my-6 p-4 bg-green-50 border border-green-200 rounded-xl">
                   <p className="text-green-700 font-semibold flex items-center gap-2">
                     🎉 You qualify for FREE shipping!
                   </p>
                 </div>
               ) : (
+                /* PAID SHIPPING - Show calculator */
                 <>
+                  <div className="mb-6 p-4 bg-brand-mint/10 rounded-xl">
+                    <p className="text-sm text-brand-sage mb-2">
+                      Add <strong>${(freeShippingThreshold - cartSubtotal).toFixed(2)}</strong> more for FREE shipping!
+                    </p>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-brand-coral rounded-full h-2 transition-all"
+                        style={{ width: `${Math.min((cartSubtotal / freeShippingThreshold) * 100, 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-brand-sage mb-2">
                       Shipping Zip Code
