@@ -33,16 +33,3 @@ export default defineType({
     }),
   ],
 });
-```
-
-5. Commit
-
----
-
-## File 3: index.js
-
-1. Stay in `sanity/schemas` folder
-2. Click **"Add file"** → **"Create new file"**
-3. Name it:
-```
-index.js
