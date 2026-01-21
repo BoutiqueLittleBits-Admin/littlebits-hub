@@ -157,7 +157,11 @@ export default function ProductPage() {
               </div>
             )}
             {getProcessingTimeText() && <p className="text-sm text-gray-500 mb-4">Processing: {getProcessingTimeText()}</p>}
-            <p className="text-gray-600 text-lg mb-6">{product.description}</p>
+            <div className="text-gray-600 text-lg mb-6">
+              {Array.isArray(product.description) ? product.description.map((block, i) => (
+                <p key={i} className="mb-4">{block.children?.map(child => child.text).join('')}</p>
+              )) : <p>{product.description}</p>}
+            </div>
             {product.hasVariations && product.variations?.length > 0 && (
               <div className="mb-6">
                 <label className="block text-brand-sage font-semibold mb-2">Select Option:</label>
