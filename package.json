@@ -15,6 +15,12 @@
     "postcss": "8.4.33",
     "autoprefixer": "10.4.17",
     "@stripe/stripe-js": "^2.4.0",
-    "stripe": "^14.14.0"
+    "stripe": "^14.14.0",
+    "sanity": "^3.37.0",
+    "next-sanity": "^8.0.0",
+    "@sanity/client": "^6.15.0",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.37.0",
+    "styled-components": "^6.1.8"
   }
 }
