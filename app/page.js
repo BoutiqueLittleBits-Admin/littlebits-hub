@@ -62,8 +62,8 @@ export default function Home() {
       
       <section className="bg-gradient-to-br from-brand-blush via-brand-cream to-brand-mint py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-brand-sage mb-6">Curated Gifts & Joyful Surprises</h1>
-          <p className="text-xl text-brand-sage/80 mb-8 max-w-2xl mx-auto">Seeds of nostalgia for the fun aunties, thoughtful gifters, and everyone who believes the little things matter most.</p>
+          <h1 className="text-5xl md:text-6xl font-bold text-brand-sage mb-6">Welcome to Little Bits</h1>
+          <p className="text-xl text-brand-sage/80 mb-8 max-w-2xl mx-auto">Thoughtful. Curated. Creative. Because the best gifts come in little bits.</p>
           <a href="/shop" className="inline-block bg-brand-coral text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-brand-sage transition-colors shadow-lg">Shop Now ✨</a>
         </div>
       </section>
