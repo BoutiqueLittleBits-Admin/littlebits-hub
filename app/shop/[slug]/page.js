@@ -11,7 +11,7 @@ const productBySlugQuery = `
     title,
     slug,
     description,
-    "image": coalesce(images[0].asset->url, externalImageUrl),
+    "images": images[].asset->url,
     externalImageUrl,
     basePrice,
     compareAtPrice,
@@ -52,6 +52,7 @@ export default function ProductPage() {
   const [selectedVariation, setSelectedVariation] = useState(null);
   const [personalizationText, setPersonalizationText] = useState('');
   const [personalizationError, setPersonalizationError] = useState('');
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -85,11 +86,12 @@ export default function ProductPage() {
       return;
     }
     setPersonalizationError('');
+    const allImages = product.images?.length > 0 ? product.images : [product.externalImageUrl];
     const cartItem = {
       slug: product.slug?.current,
       name: selectedVariation ? product.title + ' - ' + selectedVariation.name : product.title,
       price: selectedVariation ? selectedVariation.price.toFixed(2) : product.basePrice.toFixed(2),
-      image: product.image || product.externalImageUrl,
+      image: allImages[0],
       shippingProfile: product.shippingProfile,
     };
     if (personalizationText.trim()) {
@@ -135,14 +137,31 @@ export default function ProductPage() {
     );
   }
 
+  const allImages = product.images?.length > 0 ? product.images : (product.externalImageUrl ? [product.externalImageUrl] : []);
+
   return (
     <div className="min-h-screen">
       <Toast message="Added to cart!" isVisible={showToast} />
       <section className="max-w-6xl mx-auto py-16 px-6">
-        <a href="/shop" className="text-brand-sage hover:text-brand-coral mb-8 inline-block">Back to Shop</a>
+        <a href="/shop" className="text-brand-sage hover:text-brand-coral mb-8 inline-block">← Back to Shop</a>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
-          <div className="bg-gray-100 rounded-2xl overflow-hidden shadow-lg flex items-center justify-center p-6">
-            <img src={product.image || product.externalImageUrl} alt={product.title} className="max-w-full max-h-96 object-contain" />
+          <div>
+            <div className="bg-gray-100 rounded-2xl overflow-hidden shadow-lg flex items-center justify-center p-6 mb-4">
+              <img src={allImages[selectedImageIndex] || '/placeholder.png'} alt={product.title} className="max-w-full max-h-96 object-contain" />
+            </div>
+            {allImages.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {allImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImageIndex(idx)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${selectedImageIndex === idx ? 'border-brand-sage' : 'border-transparent hover:border-brand-mint'}`}
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <div>
             <span className="text-sm font-medium text-brand-sage bg-brand-mint/20 px-3 py-1 rounded-full">{product.category?.title || 'Uncategorized'}</span>
