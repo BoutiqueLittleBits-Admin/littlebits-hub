@@ -14,6 +14,9 @@ export const metadata = {
     description: 'Thoughtful. Curated. Creative. Because the best gifts come in little bits.',
     type: 'website',
   },
+  verification: {
+    google: 'xggMgmidX1Tj2UZ1tFQ5wgXuN5pBIbX8kZvF_GusfME',
+  },
 }
 
 export default function RootLayout({ children }) {
