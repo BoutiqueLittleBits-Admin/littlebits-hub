@@ -7,6 +7,9 @@ import { CartProvider } from './components/CartContext'
 
 export const metadata = {
   metadataBase: new URL('https://www.boutiquelittlebits.com'),
+  alternates: {
+    canonical: 'https://www.boutiquelittlebits.com',
+  },
   title: {
     default: 'Boutique Little Bits | Curated Gifts & Joyful Surprises',
     template: '%s | Boutique Little Bits',
