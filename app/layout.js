@@ -6,13 +6,36 @@ import Banner from './components/Banner'
 import { CartProvider } from './components/CartContext'
 
 export const metadata = {
-  title: 'Boutique Little Bits | Curated Gifts & Joyful Surprises',
-  description: 'Thoughtful. Curated. Creative. Because the best gifts come in little bits. Shop personalized gifts, spa kits, kids items, and unique finds.',
-  keywords: 'gifts, personalized gifts, curated gifts, spa kits, kids gifts, boutique, unique gifts, gift sets',
+  metadataBase: new URL('https://www.boutiquelittlebits.com'),
+  title: {
+    default: 'Boutique Little Bits | Curated Gifts & Joyful Surprises',
+    template: '%s | Boutique Little Bits',
+  },
+  description: 'Shop curated gift sets, personalized friendship bracelets, spa kits, kids gifts, and unique accessories from Bella Vista, AR. Hand-picked gifts for every occasion. Free shipping over $50!',
+  keywords: 'gifts, personalized gifts, curated gifts, spa kits, kids gifts, boutique, unique gifts, gift sets, personalized kids gifts, friendship bracelets, gift baskets, Bella Vista Arkansas',
   openGraph: {
     title: 'Boutique Little Bits | Curated Gifts & Joyful Surprises',
-    description: 'Thoughtful. Curated. Creative. Because the best gifts come in little bits.',
+    description: 'Shop curated gift sets, personalized friendship bracelets, spa kits, kids gifts, and unique accessories. Hand-picked gifts for every occasion. Free shipping over $50!',
+    url: 'https://www.boutiquelittlebits.com',
+    siteName: 'Boutique Little Bits',
     type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Boutique Little Bits | Curated Gifts & Joyful Surprises',
+    description: 'Shop curated gift sets, personalized friendship bracelets, spa kits, kids gifts, and unique accessories. Free shipping over $50!',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   verification: {
     google: 'xggMgmidX1Tj2UZ1tFQ5wgXuN5pBIbX8kZvF_GusfME',
